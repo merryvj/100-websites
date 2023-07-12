@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            overflow: none;
+            background-color: rgb(190, 186, 213);
+            font-size: 1.5rem;
+        }
+  
+        ul {
+            list-style-type: none;
+            aspect-ratio: 1/1;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+        }
+        
+        li {
+            position: absolute;
+            transform-origin: center;
+            user-select: none;
+        }
+
+        li:hover::after{
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 80%;
+            width: 70%;
+            background: radial-gradient(rgba(255, 83, 83, 0.4), rgba(0, 0, 0, 0) 60%);
+            z-index: -1;
+        }
+
+        #selected {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+    </style>
+</head>
+<body>
+    
+    <ul id="ring">
+        
+    </ul>
+    <div id="selected">
+        heheeh
+    </div>
+    
+    <script>
+        // let data = [
+        //     "(´ω｀★)", "(─‿‿─)", "(^_^;)", "!?(･_･;?", "♪( ´▽｀)", "(´ω｀★)", "(─‿‿─)", "(^_^;)", "!?(･_･;?", "♪( ´▽｀)"
+        // ]
+
+        let data = [
+            {
+                icon: "(´ω｀★)",
+                name: "Bob",
+                link: "www.wikipedia.com"
+            },
+            {
+                icon: "(´ω｀★)",
+                name: "Macy",
+                link: "www.wikipedia.com"
+            },
+            {
+                icon: "(´ω｀★)",
+                name: "Li",
+                link: "www.wikipedia.com"
+            },
+            {
+                icon: "(´ω｀★)",
+                name: "Yo",
+                link: "www.wikipedia.com"
+            },
+            {
+                icon: "(´ω｀★)",
+                name: "Mama",
+                link: "www.wikipedia.com"
+            },
+            {
+                icon: "(´ω｀★)",
+                name: "Dairy",
+                link: "www.wikipedia.com"
+            },
+            {
+                icon: "(´ω｀★)",
+                name: "Yo",
+                link: "www.wikipedia.com"
+            },
+            {
+                icon: "(´ω｀★)",
+                name: "Mama",
+                link: "www.wikipedia.com"
+            },
+            {
+                icon: "(´ω｀★)",
+                name: "Dairy",
+                link: "www.wikipedia.com"
+            },
+            {
+                icon: "(´ω｀★)",
+                name: "Dairy",
+                link: "www.wikipedia.com"
+            },
+        ]
+        let ring = document.querySelector("#ring");
+        let selected = document.querySelector("#selected");
+
+        let angle = 360 / data.length
+        data.map((d, i) => {
+            let blob = document.createElement("li");
+            blob.textContent = d.icon;
+            ring.append(blob);
+            blob.style.transform = `rotate(${angle * i}deg) translate(300px) rotate(-${angle * i}deg)`;
+            blob.addEventListener("mouseenter", (e) => {
+                selected.textContent = d.name;
+            })
+        })
+    </script>
+</body>
+
+</html>
