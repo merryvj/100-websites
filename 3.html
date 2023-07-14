@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(#b1c4fc 40%, #e6ecff 80%)
+        }
+        #wrapper{
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 48px;
+        }
+
+        #range{
+            -webkit-appearance: none;
+            appearance: none;
+            height: 24px;
+            width: 100%;
+            background: linear-gradient(90deg,#e2fedd, #b7d4ff, #d3c4ff, #eaccff, #e2fedd);
+            border: solid 3px #4e47ad;
+            outline: none;
+            border-radius: 999px;
+        }
+
+        #range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 999px;
+            background: radial-gradient(#e6ecff, #b1c4fc);
+            box-shadow: inset 0 0 8px 0px #4e47ad;
+            border: solid 3px #4e47ad;
+            cursor: pointer;
+        }
+
+        main {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #4e47ad;
+        }
+
+        mark {
+            background: linear-gradient(red, orange);
+            color: yellow;
+        }
+
+        #rainbow{
+            background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <input id="range" type="range" min="1" max="1000" value="1"/>
+    </div>
+    <main>
+        <p id="content">
+
+        </p>
+    </main>
+
+    <script>
+        const data = [
+            ":)",
+            "hello!!",
+            "...",
+            "it's really warm today",
+            "one of the <strong>warmest</strong> days",
+            "and years...",
+            "some things that happened today:",
+            "scraping the web with Puppeteer",
+            "that graph viz of websites",
+            "feeling so certain about making tools",
+            "no, <i> mediums </i>",
+            "and environments(?)",
+            "for expression...creativity...",
+            "it's cute but not helpful",
+            "when the world becomes more <ruby>乱<rt>luàn</rt><ruby>",
+            "so that's when we went to",
+            "shoot a gun",
+            "it was a BLAST for all, as promised",
+            "sniper near by <mark>kaboom kaboom </mark>",
+            "in tears but I still tried",
+            "paper targets punctured",
+            "eating bo bun hue after",
+            "as software engineer friends talk",
+            "networking and two-timing jobs",
+            "and I scroll......",
+            "<span id='rainbow'>Taiwanese 7/11 mascots <sup>floating <sup>away</sup></sup></span>",
+            "like my worries",
+            "thank u for this part of my menstrual cycle",
+            "(:"
+        ]
+
+        const slider = document.querySelector("#range");
+        const content = document.querySelector("#content");
+        content.innerHTML = data[0];
+
+        //get total duration of all data
+        //map duration to slider value 
+        const totalDuration = data.reduce((sum, curr) => sum + parseInt(curr.duration), 0);
+        const scale = (number) => {
+            let inMin = 1, inMax = 1000;
+            let outMin = 1, outMax = data.length;
+            return Math.round((number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin) - 1;
+        }
+
+        const updateContent = (progress) => {
+            let index = scale(progress);
+            content.innerHTML = data[index];
+        }
+        slider.oninput = () => updateContent(slider.value);
+
+        //prevent slider from auto-advancing when clicking slider
+        let isSliderPressed = false;
+        slider.addEventListener("mousedown", (e) => {
+            e.preventDefault();
+            isSliderPressed = true;
+            
+            slider.addEventListener("mouseup", (e) => {
+                e.preventDefault();
+                isSliderPressed = false;
+            })
+        })
+
+        setInterval(() => {
+            if (slider.value == 1000) slider.value = 1;
+            else if (isSliderPressed) return;
+            slider.value++;
+            updateContent(slider.value);
+        }, 1000/24);
+
+    </script>
+</body>
+</html>
