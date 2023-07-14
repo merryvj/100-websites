@@ -54,6 +54,11 @@
             color: #4e47ad;
         }
 
+        p {
+            transform: translateY(-50%);
+        }
+
+        
         mark {
             background: linear-gradient(red, orange);
             color: yellow;
@@ -132,11 +137,9 @@
         //prevent slider from auto-advancing when clicking slider
         let isSliderPressed = false;
         slider.addEventListener("mousedown", (e) => {
-            e.preventDefault();
             isSliderPressed = true;
             
             slider.addEventListener("mouseup", (e) => {
-                e.preventDefault();
                 isSliderPressed = false;
             })
         })
