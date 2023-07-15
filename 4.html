@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+      main {
+        position: "relative";
+        width: 100vw;
+        height: 100vh;
+        background-color: #F7F6F0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      span {
+        display: block;
+        position: absolute;
+        font-size: 2rem;
+        padding: 16px 24px;
+        margin: 4px;
+        user-select: none;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        cursor: grab;
+      }
+
+      #instructions {
+        font-size: 3rem;
+        opacity: 0.5;
+        transition: opacity 0.5s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+        <div id="instructions"> paste any word(s) you like </div>
+    </main>
+    <script>
+      let main = document.querySelector("main");
+      let instructions = document.querySelector("#instructions");
+      let mousePos = [window.innerWidth / 2, window.innerHeight / 2];
+      let draggedEl = null;
+      let maxLayer = 1;
+
+      document.addEventListener("paste", (e) => {
+        e.preventDefault();
+        instructions.style.opacity = 0;
+        let paste = (e.clipboardData || window.clipboardData).getData("text");
+        let pastedWords = paste.trim().split(" ");
+
+        for (let word of pastedWords) {
+          addWord(word);
+        }
+
+        function addWord(word) {
+          let pastedEl = document.createElement("span");
+          pastedEl.textContent = word;
+          pastedEl.addEventListener("mousedown", (e) => {
+            draggedEl = pastedEl;
+            draggedEl.style.zIndex = maxLayer;
+            draggedEl.style.cursor = "grabbing";
+            maxLayer++;
+            pastedEl.addEventListener("mousemove", (e) => {
+              if (!draggedEl) return;
+              pastedEl.style.left = e.clientX + "px";
+              pastedEl.style.top = e.clientY + "px";
+            });
+          });
+
+          main.appendChild(pastedEl);
+
+          pastedEl.style.left = mousePos[0] + "px";
+          pastedEl.style.top = mousePos[1] + "px";
+          pastedEl.style.backgroundColor = `hsla(
+                ${scale(mousePos[0], 0, window.innerWidth, 0, 360)},
+                ${scale(word.length, 0, 15, 50, 80)}%,
+                ${scale(mousePos[1], 0, window.innerHeight, 50, 80)}%,
+                0.8
+            )
+          `;
+        }
+
+        function scale(number, inMin, inMax, outMin, outMax) {
+          return (
+            ((number - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin
+          );
+        }
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        mousePos = [e.clientX, e.clientY];
+      });
+
+      document.addEventListener("mouseup", (e) => {
+        if (!draggedEl) return;
+        draggedEl.style.cursor = "grab";
+        draggedEl = null;
+      });
+
+      document.addEventListener("dragend", (e) => {
+        draggedEl.style.left = e.clientX + "px";
+        draggedEl.style.top = e.clientY + "px";
+      });
+    </script>
+  </body>
+</html>
