@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        overscroll-behavior: none;
+      }
+
+      p {
+        margin: 0.5rem;
+      }
+
+      main {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #f6f5f1;
+      }
+
+      .grid {
+        position: absolute;
+        width: 150%;
+        height: 180%;
+        left: -25%;
+        top: -40%;
+        transform-origin: center;
+        padding: 5rem;
+        display: flex;
+        will-change: transform;
+      }
+
+      .col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .col:nth-child(2),
+      .col:nth-child(4) {
+        justify-content: space-between;
+      }
+
+      .item {
+        position: relative;
+        width: 20vw;
+        aspect-ratio: 1/1;
+        transition: 0.5s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        cursor: pointer;
+        padding-bottom: 6rem;
+        background-color: #fcfbf7;
+        border: solid 1vw #fcfbf7;
+        border-radius: 8px;
+        box-shadow: 0.2px 0.2px 0.8px -10px rgba(40, 10, 0, 0.014),
+          0.4px 0.4px 2px -10px rgba(40, 10, 0, 0.02),
+          0.8px 0.8px 3.8px -10px rgba(40, 10, 0, 0.025),
+          1.3px 1.3px 6.7px -10px rgba(40, 10, 0, 0.03),
+          2.5px 2.5px 12.5px -10px rgba(40, 10, 0, 0.036),
+          6px 6px 30px -10px rgba(40, 10, 0, 0.05);
+      }
+
+      .item > span {
+        position: absolute;
+        bottom: 0.4rem;
+        font-size: 1.8rem;
+        font-family: "Reenie Beanie", cursive;
+        color: rgb(20, 10, 10);
+      }
+
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .content {
+        position: absolute;
+        width: 100%;
+        /* height: 200vh; */
+        opacity: 0;
+        min-height: 100vh;
+        pointer-events: none;
+        transition: 0.5s ease;
+        z-index: 1;
+      }
+
+      .content.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .content__main--img {
+        position: relative;
+        width: 100%;
+        height: 80vh;
+        object-fit: cover;
+        object-position: center;
+        margin-bottom: 1rem;
+      }
+
+      .content__container {
+        position: relative;
+        width: 90%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: solid 2px green;
+      }
+
+      .content__text {
+        margin: 1rem 0;
+      }
+
+      .close {
+        position: fixed;
+        bottom: 8vh;
+        left: 50%;
+        padding: 1vh 2vh;
+        border-radius: 999px;
+        background-color: rgba(0, 0, 0, 0.1);
+        transform: translateX(-50%);
+        transition: 0.2s ease;
+      }
+
+      .close:hover {
+        opacity: 0.7;
+        cursor: pointer;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="grid">
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col"></div>
+      </div>
+    </main>
+    <div class="content">
+      <div class="content__main--img"></div>
+      <div class="content__header"></div>
+      <div class="content__text"></div>
+    </div>
+    <script type="module">
+      const projects = [
+        {
+          image:
+            "https://d2w9rnfcy7mm78.cloudfront.net/22104089/original_203571b812a531d846006f52c5cd5e70.png?1685773591?bc=0",
+          title: "iCute",
+          content: ["Kaoshiung"],
+        },
+        {
+          image:
+            "https://d2w9rnfcy7mm78.cloudfront.net/22104109/original_97b5c69c36965b1cfbd1ca972410ddce.jpg?1685774047?bc=0",
+          title: "Don't!",
+          content: ["Taipei"],
+        },
+        {
+          image:
+            "https://d2w9rnfcy7mm78.cloudfront.net/22104111/original_7eb8b8b2cba7d53360fde5d3cb589a06.jpg?1685774109?bc=0",
+          title: "Bath",
+          content: ["Kaoshiung"],
+        },
+        {
+          image:
+            "https://d2w9rnfcy7mm78.cloudfront.net/22104071/original_113ed12df5c3f17c28ed8e58808639ef.jpg?1685773268?bc=0",
+          title: "Cross with care",
+          content: ["Naoshima"],
+        },
+        {
+          image:
+            "https://d2w9rnfcy7mm78.cloudfront.net/22104093/original_a834cb7d23ce18e89ea50b8933929152.jpg?1685773728?bc=0",
+          title: "Make way",
+          content: ["Kanazawa"],
+        },
+        {
+          image:
+            "https://d2w9rnfcy7mm78.cloudfront.net/22104153/original_13b1359eb4488c2c21ec5579b9084e7b.jpg?1685774487?bc=0",
+          title: "Temple rules",
+          content: ["Kyoto"],
+        },
+        {
+          image:
+            "https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbd2fecf2-c3f7-425d-9f70-e55bfd07b06b_3024x4032.jpeg",
+          title: "Beware families",
+          content: ["Singapore"],
+        },
+        {
+          image:
+            "https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0b04f556-9f92-40a6-bd3e-5986dcc77bab_986x1382.png",
+          title: "Hold hands, darling",
+          content: ["Vienna"],
+        },
+        {
+          image:
+            "https://d2w9rnfcy7mm78.cloudfront.net/22104076/original_aa1e578c1efc66fe34afd8eb2a66f27d.jpg?1685773359?bc=0",
+          title: "Industry!",
+          content: ["Ninh Binh"],
+        },
+        {
+          image:
+            "https://d2w9rnfcy7mm78.cloudfront.net/22104176/original_8e1f050db5b6724c81d9d2dc06d71f73.jpg?1685774793?bc=0",
+          title: "Bread boi",
+          content: ["Busan"],
+        },
+        {
+          image:
+            "https://d2w9rnfcy7mm78.cloudfront.net/22104099/original_d9694583b947bf2ad04d584a526f1d8b.jpg?1685773868?bc=0",
+          title: "Ouch!",
+          content: ["Seoul"],
+        },
+        {
+          image:
+            "https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1e98c01c-5c3f-4d0e-94d3-88214e900f6e_2627x2627.jpeg",
+          title: "Breathable air",
+          content: ["Gyeongju"],
+        },
+      ];
+
+      const content = document.querySelector(".content");
+      const contentImage = document.querySelector(".content__main--img");
+      const contentHeader = document.querySelector(".content__header");
+      const contentText = document.querySelector(".content__text");
+      const grid = document.querySelector(".grid");
+      const cols = [...document.querySelectorAll(".col")];
+
+      let animating = true;
+      let projectsArray = [];
+
+      class Project {
+        constructor(project, idx) {
+          this.image = project.image;
+          this.title = project.title;
+          this.content = project.content;
+          this.index = idx;
+          this.active = false;
+          this.createItem();
+          console.log(this);
+        }
+
+        createItem() {
+          this.gridItem = document.createElement("div");
+          this.gridItem.classList.add("item");
+          this.img = document.createElement("img");
+          this.img.src = this.image;
+          this.gridItem.appendChild(this.img);
+          this.caption = document.createElement("span");
+          this.caption.textContent = this.content[0];
+          this.gridItem.appendChild(this.caption);
+          this.caption.classList.add("caption");
+          let i = this.index % cols.length;
+          cols[i].appendChild(this.gridItem);
+          this.gridItem.addEventListener("click", this.activate.bind(this));
+        }
+
+        activate() {
+          document.body.scrolltop = document.documentElement.scrollTop = 0;
+          this.active = true;
+          animating = false;
+
+          for (let i = 0; i < projectsArray.length; i++) {
+            if (projectsArray[i].index !== this.index) {
+              projectsArray[i].gridItem.style.opacity = 0;
+            }
+          }
+
+          let { left, top, width, height } =
+            this.gridItem.getBoundingClientRect();
+          let x = window.innerWidth / 2 - (left + width / 2);
+          let y = window.innerHeight / 2 - (top + height / 2);
+
+          if (this.active) {
+            this.gridItem.style.transform = `translate3d(${x}px, ${y}px, 0) scale(2)`;
+            contentText.innerHTML = "";
+            contentHeader.innerHTML = "";
+            contentImage.src = this.image;
+
+            // let header = document.createElement("h1");
+            // header.textContent = this.title;
+            // contentHeader.appendChild(header);
+
+            // for (let i = 0; i < this.content.length; i++) {
+            //     let text = document.createElement("p");
+            //     text.textContent = this.content[i];
+            //     contentText.appendChild(text);
+            // }
+
+            setTimeout(() => {
+              content.classList.add("active");
+            }, 500);
+          }
+        }
+
+        deactivate() {
+          this.active = false;
+          this.gridItem.style.transform = `translate3d(0, 0, 0) scale(1)`;
+          this.gridItem.style.opacity = 1;
+        }
+      }
+
+      projects.forEach((project, idx) => {
+        let newProject = new Project(project, idx);
+        projectsArray.push(newProject);
+      });
+
+      content.addEventListener("click", (e) => {
+        content.classList.remove("active");
+        document.body.scrolltop = document.documentElement.scrollTop = 0;
+        setTimeout(() => {
+          animating = true;
+        }, 500);
+
+        for (let i = 0; i < projectsArray.length; i++) {
+          projectsArray[i].deactivate();
+        }
+      });
+
+      let mouseCoords = {
+        x: 0,
+        y: 0,
+        targetX: 0,
+        targetY: 0,
+      };
+
+      window.addEventListener("mousemove", (e) => {
+        mouseCoords.targetX = e.clientX - window.innerWidth / 2;
+        mouseCoords.targetY = e.clientY - window.innerHeight / 2;
+      });
+
+      function animate() {
+        if (animating) {
+          mouseCoords.x = lerp(mouseCoords.x, mouseCoords.targetX, 0.075);
+          mouseCoords.y = lerp(mouseCoords.y, mouseCoords.targetY, 0.075);
+          let { x, y } = mouseCoords;
+          grid.style.transform = `translate3d(${-x}px, ${-y}px, 0)`;
+        }
+
+        window.requestAnimationFrame(animate);
+      }
+      animate();
+
+      //utils
+      function lerp(start, end, t) {
+        return start * (1 - t) + end * t;
+      }
+    </script>
+  </body>
+</html>
