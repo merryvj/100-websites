@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+            --bg-color: #efefef;
+            --border-color: grey;
+            --memo-color: yellow;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html,body{
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+        }
+
+        main {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .board {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: solid 1px var(--border-color);
+            overflow: hidden;
+        }
+
+        .memo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            height: 100px;
+            width: 100px;
+            background-color: var(--memo-color);
+        }
+
+        .move {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 16px;
+            border-bottom: solid 1px var(--border-color);
+            cursor: grab;
+        }
+
+        .close {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 16px;
+            height: 100%;
+            border-right: solid 1px var(--border-color);
+            background-color: var(--bg-color);
+            cursor: pointer;
+        }
+
+        .resize {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 10px;
+            height: 10px;
+            border-top: 1px solid var(--border-color);
+            border-left: 1px solid var(--border-color);
+            cursor: se-resize;
+        }
+        
+        .text {
+            position: absolute;
+            top: 16px;
+            width: 100%;
+            height: calc(100% - 16px);
+            background-color: transparent;
+            resize: none;
+            color: var(--bg-color);
+            padding: 5px;
+            outline: none;
+            font-size: 18px;
+        }
+
+        .selection {
+            position: absolute;
+            background-color: grey;
+        }
+        
+    </style>
+</head>
+<body>
+    <main>
+        <canvas>
+
+        </canvas>
+
+        <section class="board">
+
+            <div class="selection"></div>
+
+            <div class="memo">
+                <div class="move">
+                    <div class="close"></div>
+                </div>
+                <textarea class="text"></textarea>
+                <div class="resize">
+
+                </div>
+            </div>
+        </section>
+
+        <script>
+            const board = document.querySelector(".board");
+            const selectionDiv = document.querySelector(".selection");
+
+            let mouseClicked = false;
+            let movingMemo = false;
+            let resizingMemo = false;
+
+            let offsetXStart = 0, offsetYStart = 0, offsetXEnd = 0, offsetYEnd = 0;
+            let offsetXCurrent = 0, offsetYCurrent = 0;
+
+            board.addEventListener("mousedown", (e) => {
+                mouseClicked = true;
+                offsetXStart = e.offsetX;
+                offsetYStart = e.offsetY;
+
+                if(!movingMemo) {
+                    selectionDiv.style.left = `${offsetXStart}px`;
+                    selectionDiv.style.top = `${offsetYStart}px`;
+                    board.style.cursor  = "crosshair";
+                }
+            })
+
+            board.addEventListener("mousemove", (e) => {
+                if (mouseClicked && !movingMemo && !resizingMemo) {
+                    offsetXCurrent = e.offsetX - offsetXStart;
+                    offsetYCurrent = e.offsetY - offsetYStart;
+
+                    selectionDiv.style.width = `${offsetXCurrent}px`
+                    selectionDiv.style.height = `${offsetYCurrent}px`
+                }
+            })
+
+            board.addEventListener("mouseup", (e) => {
+                mouseClicked = false;
+                offsetXEnd = e.offsetX;
+                offsetYEnd = e.offsetY;
+
+                let width = offsetXStart - offsetXEnd;
+                let height = offsetYStart - offsetYEnd;
+
+                selectionDiv.style.width = "0px";
+                selectionDiv.style.height = "0px";
+                board.style.cursor = "default";
+            })
+
+        </script>
+    </main>
+</body>
+</html>
