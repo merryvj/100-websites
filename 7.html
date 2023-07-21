@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        user-select: none;
+      }
+
+      body {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      main {
+        position: absolute;
+        height: 50vh;
+        aspect-ratio: 1;
+        cursor: col-resize;
+      }
+
+      h1 {
+        position: absolute;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      h1:nth-of-type(1) {
+        bottom: 0;
+        color: green;
+        writing-mode: vertical-rl;
+      }
+
+      h1:nth-of-type(2) {
+        color: red;
+        writing-mode: horizontal-tb;
+      }
+
+      h1:nth-of-type(3) {
+        bottom: 0;
+        right: 0;
+        color: blue;
+        writing-mode: horizontal-tb;
+      }
+
+      h1:nth-of-type(4) {
+        left: 100%;
+        color: peru;
+        writing-mode: vertical-lr;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Hello it's me and you are who?</h1>
+      <h1>Hello it's me and you are who?</h1>
+      <h1>Hello it's me and you are who?</h1>
+      <h1>Hello it's me and you are who?</h1>
+    </main>
+
+    <script>
+
+
+        const wrapper = document.querySelector("main");
+        const headings = Array.from(document.querySelectorAll("h1"));
+
+        function sizing(element) {
+            let height = 50;
+            
+            function handle(e) {
+              if (e.movementX > 0) ++height
+              else --height;
+              element.style.height = `${height}vh`
+            }
+
+            document.addEventListener("mousemove", handle)
+        }
+
+        function rotation(elements) {
+          let rotIndex = 0;
+
+          function handle() {
+            rotIndex++;
+            if (rotIndex === 6) rotIndex = 0;
+            for (let i = 0; i < elements.length; i++) {
+              elements[i].style.transform = `rotate(${rotIndex * 30}deg)`;
+            }
+          }
+
+          document.addEventListener("click", handle)
+        }
+
+        sizing(wrapper);
+        rotation(headings);
+
+
+    </script>
+  </body>
+</html>
