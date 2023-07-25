@@ -1,141 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        * {
-            padding: 0;
-            margin: 0;
-        }
+      * {
+        padding: 0;
+        margin: 0;
+      }
 
-        body {
-            height: 100vh;
-            width: 100vw;
-            overflow: none;
-            background-color: rgb(190, 186, 213);
-            font-size: 1.5rem;
-        }
-  
-        ul {
-            list-style-type: none;
-            aspect-ratio: 1/1;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: auto;
-        }
-        
-        li {
-            position: absolute;
-            transform-origin: center;
-            user-select: none;
-        }
+      body {
+        height: 100vh;
+        width: 100vw;
+        overflow: none;
+        background-color: #ccdd88;
+        font-size: 1.5rem;
+      }
 
-        li:hover::after{
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: 80%;
-            width: 70%;
-            background: radial-gradient(rgba(255, 83, 83, 0.4), rgba(0, 0, 0, 0) 60%);
-            z-index: -1;
-        }
+      ul {
+        list-style-type: none;
+        aspect-ratio: 1/1;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+      }
 
-        #selected {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+      li {
+        position: absolute;
+        transform-origin: center;
+        user-select: none;
+      }
 
+      li:hover::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 80%;
+        width: 70%;
+        background: radial-gradient(
+          rgba(255, 83, 83, 0.4),
+          rgba(0, 0, 0, 0) 60%
+        );
+        z-index: -1;
+      }
+
+      #selected {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none; /* no underline */
+      }
     </style>
-</head>
-<body>
-    
-    <ul id="ring">
-        
-    </ul>
-    <div id="selected">
-        heheeh
-    </div>
-    
+  </head>
+  <body>
+    <ul id="ring"></ul>
+    <div id="selected">heheeh</div>
+
     <script>
-        // let data = [
-        //     "(´ω｀★)", "(─‿‿─)", "(^_^;)", "!?(･_･;?", "♪( ´▽｀)", "(´ω｀★)", "(─‿‿─)", "(^_^;)", "!?(･_･;?", "♪( ´▽｀)"
-        // ]
+      // let data = [
+      //     "(´ω｀★)", "(─‿‿─)", "(^_^;)", "!?(･_･;?", "♪( ´▽｀)", "(´ω｀★)", "(─‿‿─)", "(^_^;)", "!?(･_･;?", "♪( ´▽｀)"
+      // ]
 
-        let data = [
-            {
-                icon: "(´ω｀★)",
-                name: "Bob",
-                link: "www.wikipedia.com"
-            },
-            {
-                icon: "(´ω｀★)",
-                name: "Macy",
-                link: "www.wikipedia.com"
-            },
-            {
-                icon: "(´ω｀★)",
-                name: "Li",
-                link: "www.wikipedia.com"
-            },
-            {
-                icon: "(´ω｀★)",
-                name: "Yo",
-                link: "www.wikipedia.com"
-            },
-            {
-                icon: "(´ω｀★)",
-                name: "Mama",
-                link: "www.wikipedia.com"
-            },
-            {
-                icon: "(´ω｀★)",
-                name: "Dairy",
-                link: "www.wikipedia.com"
-            },
-            {
-                icon: "(´ω｀★)",
-                name: "Yo",
-                link: "www.wikipedia.com"
-            },
-            {
-                icon: "(´ω｀★)",
-                name: "Mama",
-                link: "www.wikipedia.com"
-            },
-            {
-                icon: "(´ω｀★)",
-                name: "Dairy",
-                link: "www.wikipedia.com"
-            },
-            {
-                icon: "(´ω｀★)",
-                name: "Dairy",
-                link: "www.wikipedia.com"
-            },
-        ]
-        let ring = document.querySelector("#ring");
-        let selected = document.querySelector("#selected");
+      let defaultText = "lil beep boop ring";
+      let data = [
+        {
+          icon: "(^∇^✧)",
+          name: "Maya",
+          link: "https://mayaontheinter.net/index",
+        },
+        {
+          icon: "(๑′ᴗ‵๑)",
+          name: "Spencer",
+          link: "https://www.spencerchang.me/",
+        },
+        {
+          icon: "(─‿‿─)",
+          name: "Omar",
+          link: "https://omar.website/",
+        },
+        {
+          icon: "(´ω｀★)",
+          name: "Laurel",
+          link: "https://www.laurel.world/",
+        },
+        {
+          icon: "(✿◠‿◠)",
+          name: "Chia",
+          link: "https://chia.design/",
+        },
+        {
+          icon: "ଘ(੭ˊᵕˋ)੭",
+          name: "Mindy",
+          link: "https://mindyseu.com/",
+        },
+        {
+          icon: "৻(•̀ᗜ •́ ৻)",
+          name: "Reggie",
+          link: "https://www.reggiejames.xyz/",
+        },
+        {
+          icon: "(*´꒳`*)",
+          name: "Yehwan",
+          link: "https://yhsong.com/",
+        },
+        {
+          icon: "٩꒰｡•◡•｡꒱۶",
+          name: "Taeyoon",
+          link: "http://taeyoonchoi.com/",
+        },
+        {
+          icon: "(*•̀ᴗ•́*)و",
+          name: "Terra",
+          link: "https://terra-world.github.io/index.html",
+        },
+      ];
+      let ring = document.querySelector("#ring");
+      let selected = document.querySelector("#selected");
+      selected.textContent = defaultText;
+      selected.style.opacity = 0.5;
 
-        let angle = 360 / data.length
-        data.map((d, i) => {
-            let blob = document.createElement("li");
-            blob.textContent = d.icon;
-            ring.append(blob);
-            blob.style.transform = `rotate(${angle * i}deg) translate(300px) rotate(-${angle * i}deg)`;
-            blob.addEventListener("mouseenter", (e) => {
-                selected.textContent = d.name;
-            })
-        })
+      let angle = 360 / data.length;
+      data.map((d, i) => {
+        let blob = document.createElement("li");
+        let href = document.createElement("a");
+        blob.append(href);
+        href.href = d.link;
+        href.target = "_blank";
+        href.textContent = d.icon;
+        ring.append(blob);
+        blob.style.transform = `rotate(${
+          angle * i
+        }deg) translate(300px) rotate(-${angle * i}deg)`;
+        blob.addEventListener("mouseenter", (e) => {
+          selected.style.opacity = 1;
+          selected.textContent = d.name;
+        });
+
+        ring.addEventListener("mouseleave", (e) => {
+          selected.style.opacity = 0.5;
+          selected.textContent = defaultText;
+        });
+      });
     </script>
-</body>
-
+  </body>
 </html>

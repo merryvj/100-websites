@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <main>
+
+    </main>
+    <script>
+        const wrapper = document.querySelector("main");
+
+        const data = [
+            {
+                text: "This is a poem",
+                children: [
+                    {
+                        text: "Another option",
+                        children: [
+                            {
+                                text: "Deeper still"
+                            }
+                        ]
+                    },
+                    {
+                        text: "Another option",
+                        children: [
+                            {
+                                text: "Deeper still"
+                            }
+                        ]
+                    },
+                    {
+                        text: "Another option",
+                        children: [
+                            {
+                                text: "Deeper still"
+                            }
+                        ]
+                    },
+                    {
+                        text: "Another option",
+                        children: [
+                            {
+                                text: "Deeper still"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+
+        let currentData = {
+            root: data[0],
+            children: data[0].children,
+            ancestors: []
+        }
+
+        let node = document.createElement("div");
+        node.classList.add("node", "parent");
+        node.textContent = currentData.root.text;
+        wrapper.append(node);
+        currentData.children.forEach((node) => {
+            let childNode = document.createElement("div");
+            childNode.classList.add("node");
+            childNode.textContent = node.text;
+            wrapper.append(childNode);
+        })
+        
+    </script>
+</body>
+</html>
