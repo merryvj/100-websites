@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+            overscroll-behavior: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: hsl(300, 40%, 5%);
+        }
+        .canvas {
+            position: absolute;
+            margin: auto;
+            height: 10vh;
+            aspect-ratio: 1/1;
+        }
+
+        .ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            height: 100%;
+            width: 100%;
+            border-radius: 999px;
+            transform: translate(-50%, -50%);
+            border: solid 3px rgba(255, 217, 0, 0.536);
+        }
+        
+    </style>
+</head>
+<body>
+    <main class="canvas">
+
+    </main>
+
+    <script>
+        let data = [
+            "https://images.unsplash.com/photo-1690320276492-08823be529d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3264&q=80",
+            "https://images.unsplash.com/photo-1690320276492-08823be529d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3264&q=80",
+            "https://images.unsplash.com/photo-1690320276492-08823be529d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3264&q=80",
+            "https://images.unsplash.com/photo-1690320276492-08823be529d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3264&q=80"
+        ]
+
+        let canvas = document.querySelector(".canvas");
+        let scale = 1;
+
+        let rings = [];
+        
+        for (let i = 1; i < 6; i++) {
+            let ring = document.createElement("div");
+            ring.classList.add("ring");
+            rings.push(ring);
+            canvas.append(ring);
+            ring.style.backgroundColor = `hsla(${210 + i * 20},100%,70%,${i * 0.1})`;
+        }
+
+        document.addEventListener("wheel", (e) => {
+            e.preventDefault();
+            console.log(scale);
+            scale += e.deltaY/150;
+            scale = Math.min(8, scale);
+            scale = Math.max(0.25, scale);
+
+            rings.forEach((ring, i) => {
+                ring.style.transform = `translate(-50%, -50%) perspective(${scale * 10}em) translateZ(${i * 50}px)`;
+                
+            }, {passive: false})
+    
+            canvas.style.transform = `scale(${scale})`;
+        })
+    </script>
+</body>
+</html>
