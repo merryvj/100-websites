@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Difference Gallery</title>
+    <style>
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        main {
+            position: relative;
+            width: 50vw;
+            margin: auto;
+            background-color: white;
+        }
+
+        h1 {
+            mix-blend-mode: difference;
+            position: relative;
+            z-index: 2;
+            color: white;
+            font-family: sans-serif;
+            font-size: 2vw;
+            cursor: pointer;
+            margin-bottom: 1vw;
+            animation: slideIn 2s both;
+        }
+
+        h1:hover{
+            text-decoration: underline;
+        }
+
+        .preview {
+            position: absolute;
+            height: 50vh;
+            width: 100%;
+            z-index: 0;
+
+        }
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            animation: scaleIn 0.6s both;
+        }
+
+    
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20%);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                scale: 0.97;
+            }
+
+            to {
+                opacity: 1;
+                scale: 1;
+            }
+        }
+
+        
+    </style>
+</head>
+<body>
+    
+    <main>
+        <div class="preview">
+    
+        </div>
+
+    </main>
+    <script>
+        const data = [
+            {
+                name: "One photo",
+                image: "https://images.unsplash.com/photo-1553767777-83f1f33b40f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                desc: "Hello"
+            },
+            {
+                name: "Two picture",
+                image: "https://images.unsplash.com/photo-1533574254680-ff0c0d9e1f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+                desc: "Hello"
+            },
+            {
+                name: "Three snaps",
+                image: "https://images.unsplash.com/photo-1580745168634-33c78f4c4177?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+                desc: "Hello"
+            }
+        ]
+        const rootEl = document.querySelector("main");
+        const imgPreview = document.querySelector(".preview");
+
+        class Links {
+            constructor(element, data) {
+                this._root = element;
+                this._data = data;
+            }
+
+            renderList() {
+                this._root.addEventListener('mouseover', event => {
+                    const {target} = event;
+                    if (target.classList.contains('link')) {
+                        imgPreview.innerHTML = "";
+                        this.revealImage(this._data[target.id])
+                    }
+                    
+                })
+                const fragment = document.createDocumentFragment();
+                this._data.forEach((item, i) => {
+                    fragment.appendChild(this.createItem(item, i));
+                })
+
+                this._root.appendChild(fragment);
+            }
+
+            createItem(item, id) {
+                const itemEl = document.createElement('h1');
+                itemEl.innerText = item.name;
+                itemEl.classList.add('link');
+                itemEl.setAttribute('id', id);
+                return itemEl;
+            }
+
+            revealImage(item) {
+                const imageEl = document.createElement('img');
+                imageEl.src = item.image;
+                imgPreview.append(imageEl);
+            }
+        }
+
+        const links = new Links(rootEl, data);
+        links.renderList();
+    
+
+    </script>
+</body>
+</html>
