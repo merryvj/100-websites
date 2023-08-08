@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teeter Totter</title>
+    <style>
+        main {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            background-color: bisque;
+        }
+
+        .totter {
+            position: absolute;
+            width: 90vw;
+            height: 10vh;
+            background-color: burlywood;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .teeter {
+            position: absolute;
+            height: 20vh;
+            width: 5vw;
+            background-color: brown;
+            top: calc(40% + 5vh);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+
+        <div class="teeter"></div>
+        <div class="totter"></div>
+    </main>
+    <script>
+
+        const totter = document.querySelector(".totter");
+
+        document.addEventListener("mousemove", (e) => {
+            const { clientX } = e;
+
+            const rotation = scale(clientX, 0, window.innerWidth, -10, 10);
+            totter.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+        })
+
+        function scale(number, inMin, inMax, outMin, outMax) {
+            return (number - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+        }
+
+
+    </script>
+</body>
+
+</html>

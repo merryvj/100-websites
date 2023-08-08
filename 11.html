@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debounced Pong</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .board {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            background-color: antiquewhite;
+        }
+
+        .left,
+        .right {
+            height: 100%;
+            width: 100%;
+        }
+
+        .left {
+            background: rgb(190, 190, 255);
+        }
+
+        .right {
+            background: rgb(255, 176, 176);
+        }
+
+        .paddle {
+            height: 100px;
+            width: 24px;
+            background: bisque;
+            transform: translateY(calc(var(--y) * 1px));
+            transition: transform 0.4s;
+        }
+
+        #paddle-l {}
+
+        #paddle-r {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="board">
+        <div class="left">
+            <div id="paddle-l" class="paddle"></div>
+        </div>
+
+        <div class="right">
+            <div id="paddle-r" class="paddle"></div>
+        </div>
+    </div>
+
+    <script>
+        const paddleLeft = document.querySelector("#paddle-l");
+        const paddleRight = document.querySelector("#paddle-r");
+
+        const paddles = [paddleLeft, paddleRight];
+
+
+        const debounce = (callback, wait) => {
+            let timeoutId = null;
+            return (...args) => {
+                window.clearTimeout(timeoutId);
+                timeoutId = window.setTimeout(() => {
+                    callback.apply(null, args);
+                }, wait);
+            };
+        }
+
+        const move = (e) => {
+            const { clientY } = e;
+            if (e.target.classList.contains('left')) {
+                paddleLeft.style.setProperty("--y", clientY);
+            } else {
+                paddleRight.style.setProperty("--y", clientY);
+            }
+        }
+
+        const debouncedMove = debounce((e) => move(e), 200);
+
+        document.body.addEventListener("pointermove", (e) => {
+            debouncedMove(e);
+        })
+
+
+    </script>
+
+</body>
+
+</html>
