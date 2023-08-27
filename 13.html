@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How long will you stay?</title>
+</head>
+<body>
+    <main>
+        <div class="timer"></div>
+    </main>
+    <script>
+        let timer;
+        let seconds = 0;
+
+        const timerEl = document.querySelector(".timer");
+
+        timer = setInterval(() => {
+            seconds++;
+            timerEl.textContent = `You've been here ${seconds} seconds`
+        }, 1000)
+        
+    </script>
+    
+</body>
+</html>
