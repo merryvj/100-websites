@@ -8,16 +8,102 @@
 <body>
     <main>
         <div class="timer"></div>
+        <div class="level"></div>
     </main>
     <script>
+        const levels = [
+            {
+                threshold: 2,
+                title: "blink",
+            },
+            {
+                threshold: 6,
+                title: "yawn",
+            },
+            {
+                threshold: 12,
+                title: "stretch",
+            },
+            {
+                threshold: 30,
+                title: "check your calendar",
+            },
+            {
+                threshold: 60,
+                title: "boil water",
+            },
+            {
+                threshold: 120,
+                title: "reply to that message",
+            },
+            {
+                threshold: 200,
+                title: "cancel a stray subscription",
+            },
+            {
+                threshold: 600,
+                title: "give someone a call",
+            },
+            {
+                threshold: 1500,
+                title: "do a pomodoro session",
+            },
+            {
+                threshold: 1800,
+                title: "decompress from said session",
+            },
+            {
+                threshold: 2000,
+                title: "get distracted by scrolling",
+            },
+            {
+                threshold: 3000,
+                title: "twiddle thumbs",
+            },
+            {
+                threshold: 6000,
+                title: "read at least a chapter of that",
+            },
+            {
+                threshold: 12000,
+                title: "cook a nice little meal",
+            },
+            {
+                threshold: 12100,
+                title: "go to the bathroom for #1",
+            },
+            {
+                threshold: 12500,
+                title: "make a cup of tea or coffee",
+            },
+            {
+                threshold: 15000,
+                title: "get somewhere by transit",
+            },
+            {
+                threshold: 20000,
+                title: "exercise a little a lottle",
+            },
+            {
+                threshold: 86400,
+                title: "get ready for sleep",
+            },
+        ]
         let timer;
         let seconds = 0;
+        let currLevel = 0;
 
         const timerEl = document.querySelector(".timer");
+        const levelEl = document.querySelector(".level");
 
         timer = setInterval(() => {
             seconds++;
+            
+            if (seconds >= levels[currLevel].threshold) {
+                currLevel++;
+            }
             timerEl.textContent = `You've been here ${seconds} seconds`
+            levelEl.textContent = `You have had time to ${levels[currLevel].title}`
         }, 1000)
         
     </script>
