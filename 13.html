@@ -17,19 +17,43 @@
                 title: "blink",
             },
             {
-                threshold: 6,
+                threshold: 5,
                 title: "yawn",
             },
             {
-                threshold: 12,
+                threshold: 8,
                 title: "stretch",
             },
             {
+                threshold: 12,
+                title: "scratch an itch",
+            },
+            {
+                threshold: 18,
+                title: "think about...nevermind",
+            },
+            {
                 threshold: 30,
-                title: "check your calendar",
+                title: "check your phone",
+            },
+            {
+                threshold: 35,
+                title: "set another timer",
+            },
+            {
+                threshold: 40,
+                title: "but wait there's a meme",
+            },
+            {
+                threshold: 50,
+                title: "giggle and wiggle",
             },
             {
                 threshold: 60,
+                title: "magically stand up",
+            },
+            {
+                threshold: 110,
                 title: "boil water",
             },
             {
@@ -65,8 +89,12 @@
                 title: "read at least a chapter of that",
             },
             {
-                threshold: 12000,
+                threshold: 9000,
                 title: "cook a nice little meal",
+            },
+            {
+                threshold: 11000,
+                title: "eat that meal",
             },
             {
                 threshold: 12100,
@@ -85,8 +113,68 @@
                 title: "exercise a little a lottle",
             },
             {
+                threshold: 20500,
+                title: "go #2",
+            },
+            {
+                threshold: 20600,
+                title: "chug some water",
+            },
+            {
+                threshold: 28000,
+                title: "wander around town",
+            },
+            {
+                threshold: 28500,
+                title: "hide from the rain",
+            },
+            {
+                threshold: 30000,
+                title: "get back to where you were",
+            },
+            {
+                threshold: 32000,
+                title: "om nom nom",
+            },
+            {
+                threshold: 40000,
+                title: "be engrossed in something",
+            },
+            {
+                threshold: 42000,
+                title: "shower and floss",
+            },
+            {
+                threshold: 48000,
+                title: "vegetate",
+            },
+            {
+                threshold: 50000,
+                title: "work some more",
+            },
+            {
+                threshold: 50500,
+                title: "get a snack",
+            },
+            {
+                threshold: 51000,
+                title: "text back",
+            },
+            {
+                threshold: 54000,
+                title: "say good night",
+            },
+            {
+                threshold: 60000,
+                title: "count your blessings",
+            },
+            {
+                threshold: 61000,
+                title: "fix one last bug",
+            },
+            {
                 threshold: 86400,
-                title: "get ready for sleep",
+                title: "sleep, hopefully",
             },
         ]
         let timer;
@@ -99,11 +187,12 @@
         timer = setInterval(() => {
             seconds++;
             
-            if (seconds >= levels[currLevel].threshold) {
+            if (seconds >= levels[currLevel].threshold && currLevel < levels.length) {
                 currLevel++;
             }
-            timerEl.textContent = `You've been here ${seconds} seconds`
-            levelEl.textContent = `You have had time to ${levels[currLevel].title}`
+            
+            timerEl.textContent = `You've been here ${seconds} seconds.`
+            levelEl.textContent = `You have had time to ${levels[currLevel].title}.`
         }, 1000)
         
     </script>
