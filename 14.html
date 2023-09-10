@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Window.Navigator</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        main {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+            padding: 4rem;
+        }
+
+        li {
+            list-style-type: none;
+            text-align: center;
+        }
+
+        h2 {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: medium;
+            text-transform: uppercase;
+            font-weight: normal;
+            opacity: 0.5;
+            letter-spacing: 4%;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            font-size: xx-large;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+
+    </main>
+
+    <script>
+        const mainEl = document.querySelector("main");
+
+        let data = [
+            {
+                title: "userAgent",
+                content: window.navigator.userAgent
+            },
+            {
+                title: "appCodeName",
+                content: window.navigator.appCodeName
+            },
+
+            {
+                title: "platform",
+                content: window.navigator.platform,
+            },
+            {
+                title: "appName",
+                content: window.navigator.appName,
+            },
+            {
+                title: "product",
+                content: window.navigator.product,
+            },
+            {
+                title: "language",
+                content: window.navigator.language
+            },
+            {
+                title: "onLine",
+                content: window.navigator.onLine ? "true" : "false"
+            },
+            {
+                title: "cookieEnabled",
+                content: window.navigator.cookieEnabled ? "true" : "false"
+            },
+            {
+                title: "deviceMemory",
+                content: "~" + window.navigator.deviceMemory + "GB"
+            },
+            {
+                title: "webdriver",
+                content: window.navigator.webdriver ? "automation" : "human"
+            }
+        ];
+
+        function renderContent() {
+            const frag = document.createDocumentFragment();
+            data.forEach(item => {
+                frag.append(renderItem(item));
+            })
+
+            mainEl.append(frag);
+        }
+
+        function renderItem(item) {
+            const itemEl = document.createElement("li");
+            itemEl.classList.add("item");
+            const titleEl = document.createElement("h2");
+            titleEl.textContent = item.title;
+            const contentEl = document.createElement("p");
+            contentEl.textContent = item.content;
+
+            itemEl.append(titleEl);
+            itemEl.append(contentEl);
+            return itemEl;
+        }
+
+        renderContent();
+    </script>
+</body>
+
+</html>
