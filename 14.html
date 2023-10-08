@@ -1,123 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Window.Navigator</title>
+    <title>WRNS</title>
     <style>
+
         * {
-            padding: 0;
             margin: 0;
+            padding: 0;
             box-sizing: border-box;
+            user-select: none;
+            cursor: default;
+        }
+
+        body {
+            overscroll-behavior: none;
+            height: 100vh;
+            width: 100vw;
+            padding: 1vw;
+            background-color: rgb(30, 30, 30);
         }
 
         main {
-            min-height: 100vh;
+            height: 100%;
             width: 100%;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
-            gap: 4rem;
-            padding: 4rem;
+            justify-content: center;
+            align-items: center;
+            padding: 10vw;
+            background-color: white;
+            border-radius: 6em;
         }
 
-        li {
-            list-style-type: none;
-            text-align: center;
-        }
-
-        h2 {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: medium;
+        h1 {
+            font-family: sans-serif;
             text-transform: uppercase;
-            font-weight: normal;
-            opacity: 0.5;
-            letter-spacing: 4%;
-            margin-bottom: 0.5rem;
+            text-align: center;
+            color: rgb(240, 0, 0);
         }
-
-        p {
-            font-size: xx-large;
+        
+        #next {
+            position: fixed;
+            right: 0;
         }
     </style>
 </head>
-
 <body>
     <main>
-
     </main>
-
     <script>
+        /* many questions from here: https://www.are.na/lisa-marie/asking-the-right-questions-sbkcnb9eank */
+        const questions = [
+            "Are you a mirror or a window?",
+            "Who makes you feel most energised?",
+            "What made you smile today?",
+            "Which one of your strengths do you also consider a weakness?",
+            "Did you dream last night?",
+            "What are you beginning to believe you had the wrong idea about?",
+            "What makes a day feel like Friday?",
+            "Has art ever come to your rescue? If so, how?",
+            "Are you afraid of the dark?",
+            "What do people notice about you that you wish they didn't?",
+            "Who are you hoping to meet?",
+            "Who are you without your problems?",
+            "What is your favorite memory of music?"
+        ]
+        
+        let currentQ = 0;
+
         const mainEl = document.querySelector("main");
+        const nextBtn = document.querySelector("#next");
 
-        let data = [
-            {
-                title: "userAgent",
-                content: window.navigator.userAgent
-            },
-            {
-                title: "appCodeName",
-                content: window.navigator.appCodeName
-            },
+        mainEl.addEventListener("click", showQuestion);
 
-            {
-                title: "platform",
-                content: window.navigator.platform,
-            },
-            {
-                title: "appName",
-                content: window.navigator.appName,
-            },
-            {
-                title: "product",
-                content: window.navigator.product,
-            },
-            {
-                title: "language",
-                content: window.navigator.language
-            },
-            {
-                title: "onLine",
-                content: window.navigator.onLine ? "true" : "false"
-            },
-            {
-                title: "cookieEnabled",
-                content: window.navigator.cookieEnabled ? "true" : "false"
-            },
-            {
-                title: "deviceMemory",
-                content: "~" + window.navigator.deviceMemory + "GB"
-            },
-            {
-                title: "webdriver",
-                content: window.navigator.webdriver ? "automation" : "human"
-            }
-        ];
+        showQuestion();
 
-        function renderContent() {
-            const frag = document.createDocumentFragment();
-            data.forEach(item => {
-                frag.append(renderItem(item));
-            })
-
-            mainEl.append(frag);
+        function showQuestion() {
+            mainEl.innerHTML = "";
+            if (currentQ === questions.length - 1) currentQ = 0
+            else currentQ++;
+            const el = document.createElement("h1");
+            el.textContent = questions[currentQ];
+            mainEl.append(el);
         }
 
-        function renderItem(item) {
-            const itemEl = document.createElement("li");
-            itemEl.classList.add("item");
-            const titleEl = document.createElement("h2");
-            titleEl.textContent = item.title;
-            const contentEl = document.createElement("p");
-            contentEl.textContent = item.content;
-
-            itemEl.append(titleEl);
-            itemEl.append(contentEl);
-            return itemEl;
-        }
-
-        renderContent();
     </script>
 </body>
-
 </html>
