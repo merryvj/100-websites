@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Sites</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            overscroll-behavior: none;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        main > div {
+            overflow: hidden;
+            width: 100%;
+            aspect-ratio: 3/2;
+        }
+
+        /* main > div > h2 {
+            position: relative;
+            z-index: 10;
+        } */
+
+        iframe {
+            position: relative;
+            display: block;
+            width: 200%;
+            aspect-ratio: 3/2;
+            transform: scale(0.5);
+            transform-origin: 0% 0%;
+
+        }
+    </style>
+</head>
+<body>
+    <main>
+    </main>
+
+    <script>
+        const mainEl = document.querySelector("main");
+
+        for (let i = 1; i < 14; i++) {
+            const siteEl = document.createElement("div");
+            const frameEl = document.createElement("iframe");
+            frameEl.src = `${i}.html`;
+
+            // frameEl.onload = () => {
+            //     const title = frameEl.contentDocument.title;
+            //     const titleEl = document.createElement("h2");
+            //     titleEl.append(title);
+            //     siteEl.append(titleEl);
+            // }
+
+            siteEl.append(frameEl);
+            mainEl.append(siteEl);
+
+
+            
+        }
+    </script>
+</body>
+</html>
